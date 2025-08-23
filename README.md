@@ -36,10 +36,10 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
   - Validar con esquema parcial de Zod.
 
 - `DELETE /books/:id`
-  - Elimina un libro existente.
+  - Elimina un libro existente. ✅
 
 ### Datos iniciales
-- Usar un archivo `books.json` con al menos 5 registros iniciales (IDs en formato UUID).
+- Usar un archivo `books.json` con al menos 5 registros iniciales (IDs en formato UUID).✅
 
 ---
 
