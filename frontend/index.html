@@ -12,14 +12,28 @@
   </header>
 
   <main>
-    <!-- 🔍 Barra de búsqueda -->
+    <!-- Barra de búsqueda -->
     <section class="search-box">
       <input type="text" id="searchInput" placeholder="Buscar por autor o género...">
       <button id="searchBtn">Buscar</button>
     </section>
 
-    <!-- 📝 Formulario -->
+    <!-- Botón que abre el modal -->
+    <button class="btn-new" id="newBookBtn">➕ Nuevo libro</button>
+
+    <!-- Lista de libros -->
     <section>
+      <h2>Lista de libros</h2>
+      <div class="books-container" id="booksContainer">
+        <!-- Aquí se renderizan los libros con JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para formulario -->
+  <div class="modal" id="bookModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeModal">X</button>
       <h2>Añadir nuevo libro</h2>
       <form id="bookForm">
         <input type="text" id="title" placeholder="Título" required>
@@ -35,16 +49,8 @@
         </select>
         <button type="submit">Agregar libro</button>
       </form>
-    </section>
-
-    <!-- 📖 Lista de libros -->
-    <section>
-      <h2>Lista de libros</h2>
-      <div class="books-container" id="booksContainer">
-        <!-- Aquí se renderizan los libros con JS -->
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <script type="module" src="./main.js"></script>
 </body>
