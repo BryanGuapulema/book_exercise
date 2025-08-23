@@ -1,7 +1,7 @@
 const express = require('express')
 const crypto = require('crypto')
 const books = require('./books.json')
-const { validateBook } = require('./schemas/bookSchema.js')
+const { validateBook, validatePartialBook } = require('./schemas/bookSchema.js')
 
 const PORT = process.env.PORT ?? 1234
 
@@ -70,12 +70,59 @@ app.post('/books', (req, res) => {
   return res.status(201).json(newBook)
 })
 
-// otros metodos
+// Actualización de libros
+app.put('/books/:id', (req, res) => {
+  const { id } = req.params
+  const bookId = books.findIndex(book => book.id === id)
+
+  if (bookId === -1) {
+    return res.status(404).json({ message: 'El libro no existe' })
+  }
+
+  const result = validateBook(req.body)
+
+  if (!result.success) {
+    return res.status(400).json({ error: JSON.parse(result.error.message) })
+  }
+
+  books[bookId] = {
+    id: books[bookId].id,
+    ...result.data
+  }
+
+  return res.json(books[bookId])
+})
+
+// Actualización parcial de libros
+app.patch('/books/:id', (req, res) => {
+  const { id } = req.params
+
+  const bookId = books.findIndex(book => book.id === id)
+
+  if (bookId === -1) {
+    return res.status(404).json({ message: 'El libro no existe' })
+  }
+
+  const result = validatePartialBook(req.body)
+
+  if (!result.success) {
+    return res.status(400).json({ error: JSON.parse(result.error.message) })
+  }
+
+  const updatedBook = {
+    ...books[bookId],
+    ...result.data
+
+  }
+
+  books[bookId] = updatedBook
+
+  return res.json(updatedBook)
+})
 
 // Eliminar un libro por su id
 app.delete('/books/:id', (req, res) => {
   const { id } = req.params
-
   const bookId = books.findIndex(book => book.id === id)
 
   if (bookId === -1) {

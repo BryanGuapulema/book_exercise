@@ -1,6 +1,8 @@
 ### Obtener todos los libros
 GET http://localhost:1234/books
 
+
+
 ###Buscar por género
 GET http://localhost:1234/books?genre=DRAMA
 
@@ -10,22 +12,54 @@ GET http://localhost:1234/books?author=J.R.R.Tolkien
 ###sin el autor completo
 GET http://localhost:1234/books?author=stephen
 
+
 ###Buscar libro por id
 GET http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11
 ###id no existente
 GET http://localhost:1234/books/1
+
+
+
 
 ###Crear un nuevo libro
 POST http://localhost:1234/books
 Content-Type: application/json
 
 {
-      "title": "Nuevo libro",
-      "author": "Autor",
-      "year": 1999,
-      "genre": ["Drama", "Horror"],
-      "pages": 13
-    }
+  "title": "Nuevo libro",
+  "author": "Autor",
+  "year": 1999,
+  "genre": ["Drama", "Horror"],
+  "pages": 13
+}
+
+
+
+###Actualizar un libro
+PUT  http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11
+Content-Type: application/json
+
+{
+  "id": "d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11",
+  "title": "libro Actualizado por completo",
+  "author": "Autor",
+  "year": 2000,
+  "genre": ["Drama", "Horror"],
+  "pages": 111
+}
+
+###Actualizar parcialmente un libro
+PATCH  http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11
+Content-Type: application/json
+
+{  
+  "title": "libro Actualizado",
+  "author": "Autor Actualizado",
+  "year": 2000,
+  "pages": 132
+}
+
+
 
 ###Eliminar libro por id
 DELETE http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11

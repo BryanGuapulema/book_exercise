@@ -10,10 +10,17 @@ const bookSchema = z.object({
   pages: z.number().int().min(10)
 })
 
+// Valida todo los campos del objeto
 function validateBook (object) {
   return bookSchema.safeParse(object)
 }
 
+// valida cada caracteristica por separado
+function validatePartialBook (object) {
+  return bookSchema.partial().safeParse(object)
+}
+
 module.exports = {
-  validateBook
+  validateBook,
+  validatePartialBook
 }

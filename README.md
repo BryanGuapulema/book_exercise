@@ -31,7 +31,7 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
   - Validar con **Zod**.✅
   - Generar un `id` único con `crypto.randomUUID()`.✅
 
-- `PATCH /books/:id`
+- `PATCH /books/:id`✅
   - Actualiza parcialmente un libro.
   - Validar con esquema parcial de Zod.
 
