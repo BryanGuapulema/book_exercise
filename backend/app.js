@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const crypto = require('crypto')
 const books = require('./books.json')
 const { validateBook, validatePartialBook } = require('./schemas/bookSchema.js')
@@ -8,6 +9,7 @@ const PORT = process.env.PORT ?? 1234
 const app = express()
 app.disable('x-powered-by')
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.json({ message: 'Funcionando' })
