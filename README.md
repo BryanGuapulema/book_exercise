@@ -65,8 +65,3 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
 - Mostrar mensajes de error o éxito.
 
 ---
-
-## ⭐ Extras opcionales
-- Paginación (`GET /books?page=1&limit=5`).
-- Ordenar libros por año o páginas (`GET /books?sort=year`).
-- Guardar la última búsqueda en `localStorage`.

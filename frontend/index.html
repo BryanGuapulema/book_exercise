@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Libros</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>📚 Gestor de Libros</h1>
+  </header>
+
+  <main>
+    <!-- 🔍 Barra de búsqueda -->
+    <section class="search-box">
+      <input type="text" id="searchInput" placeholder="Buscar por autor o género...">
+      <button id="searchBtn">Buscar</button>
+    </section>
+
+    <!-- 📝 Formulario -->
+    <section>
+      <h2>Añadir nuevo libro</h2>
+      <form id="bookForm">
+        <input type="text" id="title" placeholder="Título" required>
+        <input type="text" id="author" placeholder="Autor" required>
+        <input type="number" id="year" placeholder="Año" required>
+        <input type="number" id="pages" placeholder="Número de páginas" required>
+        <select id="genre" multiple required>
+          <option value="Drama">Drama</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="History">History</option>
+          <option value="Horror">Horror</option>
+        </select>
+        <button type="submit">Agregar libro</button>
+      </form>
+    </section>
+
+    <!-- 📖 Lista de libros -->
+    <section>
+      <h2>Lista de libros</h2>
+      <div class="books-container" id="booksContainer">
+        <!-- Aquí se renderizan los libros con JS -->
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
