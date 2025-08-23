@@ -1,5 +1,7 @@
 const express = require('express')
+const crypto = require('crypto')
 const books = require('./books.json')
+const { validateBook } = require('./schemas/bookSchema.js')
 
 const PORT = process.env.PORT ?? 1234
 
@@ -48,6 +50,24 @@ app.get('/books/:id', (req, res) => {
   }
 
   return res.json(books[bookId])
+})
+
+// Cración de libro
+app.post('/books', (req, res) => {
+  const result = validateBook(req.body)
+
+  if (!result.success) {
+    return res.status(400).json({ error: JSON.parse(result.error.message) })
+  }
+
+  const newBook = {
+    id: crypto.randomUUID(),
+    ...result.data
+  }
+
+  books.push(newBook)
+
+  return res.status(201).json(newBook)
 })
 
 // otros metodos

@@ -17,7 +17,7 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
   - Si no existe, responde con `404`.✅
 
 - `POST /books`
-  - Crea un nuevo libro.
+  - Crea un nuevo libro.✅
   - El objeto debe tener:
     ```json
     {
@@ -28,8 +28,8 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
       "pages": "number (mínimo 10)"
     }
     ```
-  - Validar con **Zod**.
-  - Generar un `id` único con `crypto.randomUUID()`.
+  - Validar con **Zod**.✅
+  - Generar un `id` único con `crypto.randomUUID()`.✅
 
 - `PATCH /books/:id`
   - Actualiza parcialmente un libro.
