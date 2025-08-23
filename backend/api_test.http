@@ -1,0 +1,21 @@
+### Obtener todos los libros
+GET http://localhost:1234/books
+
+###Buscar por género
+GET http://localhost:1234/books?genre=DRAMA
+
+
+###Buscar por autor
+GET http://localhost:1234/books?author=J.R.R.Tolkien
+###sin el autor completo
+GET http://localhost:1234/books?author=stephen
+
+###Buscar libro por id
+GET http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11
+###id no existente
+GET http://localhost:1234/books/1
+
+###Eliminar libro por id
+DELETE http://localhost:1234/books/d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11
+###id no existente
+DELETE http://localhost:1234/books/1

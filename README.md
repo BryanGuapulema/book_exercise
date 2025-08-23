@@ -9,12 +9,12 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
 
 ### Rutas requeridas
 - `GET /books`
-  - Devuelve todos los libros.
-  - Permite filtrar por género (`/books?genre=Drama`) o por autor (`/books?author=Asimov`).
+  - Devuelve todos los libros.✅
+  - Permite filtrar por género (`/books?genre=Drama`)✅ o por autor (`/books?author=Asimov`).✅
 
 - `GET /books/:id`
-  - Devuelve un libro por su ID.
-  - Si no existe, responde con `404`.
+  - Devuelve un libro por su ID.✅
+  - Si no existe, responde con `404`.✅
 
 - `POST /books`
   - Crea un nuevo libro.

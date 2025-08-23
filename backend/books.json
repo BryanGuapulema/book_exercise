@@ -1,0 +1,42 @@
+[
+  {
+    "id": "d9b6b8d4-5f2c-4c0e-9f3e-8c7b4e2d5a11",
+    "title": "Cien años de soledad",
+    "author": "Gabriel García Márquez",
+    "year": 1967,
+    "genre": ["Drama", "History"],
+    "pages": 417
+  },
+  {
+    "id": "3f2c7a12-91b5-43f4-b61f-7f6e8a22a4d8",
+    "title": "1984",
+    "author": "George Orwell",
+    "year": 1949,
+    "genre": ["Sci-Fi", "Drama"],
+    "pages": 328
+  },
+  {
+    "id": "7c4e2b91-54b7-4b1e-a5f2-3c6d9e1a2f8b",
+    "title": "El señor de los anillos",
+    "author": "J.R.R. Tolkien",
+    "year": 1954,
+    "genre": ["Fantasy", "Adventure"],
+    "pages": 1216
+  },
+  {
+    "id": "1a8e9d73-2f5b-4a42-97f8-6e4b8a91c3e2",
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "year": 1953,
+    "genre": ["Sci-Fi", "Drama"],
+    "pages": 249
+  },
+  {
+    "id": "6f3c1a92-84d2-4f0e-b7a5-2e8f9c4d1a73",
+    "title": "It",
+    "author": "Stephen King",
+    "year": 1986,
+    "genre": ["Horror", "Drama"],
+    "pages": 1138
+  }
+]
