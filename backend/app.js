@@ -22,7 +22,7 @@ app.get('/books', (req, res) => {
   if (genre) {
     const booksFiltered = books.filter(
       book => book.genre.some(
-        g => g.toLowerCase() === genre.toLowerCase()
+        g => g.toLowerCase().includes(genre.toLowerCase())
       ))
 
     return res.json(booksFiltered)

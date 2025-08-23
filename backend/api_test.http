@@ -5,6 +5,8 @@ GET http://localhost:1234/books
 
 ###Buscar por género
 GET http://localhost:1234/books?genre=DRAMA
+###sin el genero completo
+GET http://localhost:1234/books?genre=h
 
 
 ###Buscar por autor
