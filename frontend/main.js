@@ -69,6 +69,22 @@ function createBookCard (book) {
 }
 
 // ======================
+// CREACION DE LIBRO
+// ======================
+bookForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+
+  const title = document.getElementById('title').value
+  const author = document.getElementById('author').value
+  const year = parseInt(document.getElementById('year').value)
+  const pages = parseInt(document.getElementById('pages').value)
+  const genre = Array.from(document.getElementById('genre').selectedOptions).map(opt => opt.value)
+
+  const newBook = { title, author, year, pages, genre }
+  addBook(newBook)
+})
+
+// ======================
 // BUSQUEDA DE LIBROS
 // ======================
 searchInput.addEventListener('input', debounce(
@@ -120,6 +136,29 @@ function mergeUniqueById (arr1, arr2) {
     new Map([...arr1, ...arr2].map(item => [item.id, item]))
       .values()
   )
+}
+
+async function addBook (newBook) {
+  try {
+    const res = await fetch(API_URL_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newBook)
+    })
+
+    if (!res.ok) {
+      console.error('Error al crear libro')
+    } else {
+      // const book = await res.json()
+      books = await fetchBooks()
+      renderBooks(await filterBooks(''))
+    }
+
+    closeModalWindow()
+    bookForm.reset()
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 // ======================
