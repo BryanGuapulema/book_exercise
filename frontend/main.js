@@ -7,7 +7,6 @@ let books = []
 // Elementos del DOM
 const booksContainer = document.getElementById('booksContainer')
 const searchInput = document.getElementById('searchInput')
-const searchBtn = document.getElementById('searchBtn')
 const newBookBtn = document.getElementById('newBookBtn')
 const bookModal = document.getElementById('bookModal')
 const closeModal = document.getElementById('closeModal')
@@ -111,9 +110,16 @@ async function fetchBookswithFilters (queryText) {
     fetch(`${API_URL_BASE}?author=${queryText}`).then(res => res.json())
   ])
 
-  const bookSet = new Set(booksByGender, booksByAuthor)
+  const uniqueBooks = mergeUniqueById(booksByGender, booksByAuthor)
 
-  return Array.from(bookSet)
+  return uniqueBooks
+}
+
+function mergeUniqueById (arr1, arr2) {
+  return Array.from(
+    new Map([...arr1, ...arr2].map(item => [item.id, item]))
+      .values()
+  )
 }
 
 // ======================

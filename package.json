@@ -4,13 +4,14 @@
   "description": "Construir una pequeña aplicación **fullstack** para gestionar libros, que permita **listar, agregar, actualizar, eliminar y buscar libros**.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch ./backend/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^17.1.2"
+    "standard": "17.1.2"
   },
   "eslintConfig": {
     "extends": "standard"
