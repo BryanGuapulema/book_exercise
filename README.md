@@ -65,3 +65,7 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
 - Mostrar mensajes de error o éxito.✅
 
 ---
+
+
+Usar el comando **npm run dev** en la carpeta raiz para desplegar el frontend y backend
+al mismo tiempo

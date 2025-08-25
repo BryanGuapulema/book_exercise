@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch ./backend/app.js"
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^9.2.0",
     "standard": "17.1.2"
   },
   "eslintConfig": {
