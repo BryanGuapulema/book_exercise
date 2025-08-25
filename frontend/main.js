@@ -10,6 +10,7 @@ const searchInput = document.getElementById('searchInput')
 const newBookBtn = document.getElementById('newBookBtn')
 const bookModal = document.getElementById('bookModal')
 const closeModal = document.getElementById('closeModal')
+const modalError = document.getElementById('modalError')
 const bookForm = document.getElementById('bookForm')
 
 // ======================
@@ -147,15 +148,14 @@ async function addBook (newBook) {
     })
 
     if (!res.ok) {
-      console.error('Error al crear libro')
+      const { error } = await res.json()
+      showErrors(error)
     } else {
       // const book = await res.json()
+      closeModalWindow()
       books = await fetchBooks()
       renderBooks(await filterBooks(''))
     }
-
-    closeModalWindow()
-    bookForm.reset()
   } catch (error) {
     console.error(error)
   }
@@ -177,9 +177,23 @@ window.addEventListener('click', (e) => {
 })
 
 function openModalWindow () {
+  modalError.innerHTML = ''
   bookModal.style.display = 'flex'
+  bookForm.reset()
 }
 
 function closeModalWindow () {
   bookModal.style.display = 'none'
+}
+
+function showErrors (error) {
+  let errorList = ''
+  modalError.innerHTML = ''
+
+  error.forEach(e => {
+    errorList += `<strong>${e.path[0]}</strong> ${e.message} <br>`
+  })
+
+  modalError.innerHTML = errorList
+  modalError.style.color = 'red'
 }
