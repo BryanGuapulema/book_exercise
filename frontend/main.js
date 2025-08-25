@@ -66,7 +66,7 @@ function createBookCard (book) {
 
   // Editar libro
   card.querySelector('.btn-edit').addEventListener('click', () => {
-    editingBookId = book.id // guardamos id
+    editingBookId = book.id
     openModalWindow()
 
     // rellenar formulario con datos del libro
@@ -74,8 +74,6 @@ function createBookCard (book) {
     document.getElementById('author').value = book.author
     document.getElementById('year').value = book.year
     document.getElementById('pages').value = book.pages
-
-    // marcar géneros seleccionados
     const genreSelect = document.getElementById('genre')
     Array.from(genreSelect.options).forEach(opt => {
       opt.selected = book.genre.includes(opt.value)
@@ -100,9 +98,9 @@ bookForm.addEventListener('submit', (e) => {
   const bookData = { title, author, year, pages, genre }
 
   if (editingBookId) {
-    updateBook(editingBookId, bookData) // EDITAR LIBRO
+    updateBook(editingBookId, bookData)
   } else {
-    addBook(bookData) // CREAR LIBRO
+    addBook(bookData)
   }
 })
 
@@ -238,7 +236,7 @@ function openModalWindow () {
 
 function closeModalWindow () {
   bookModal.style.display = 'none'
-  editingBookId = null // EDITAR LIBRO: al cerrar modal, volvemos a modo "crear"
+  editingBookId = null // volver a modo "crear"
 }
 
 function showErrors (error) {
