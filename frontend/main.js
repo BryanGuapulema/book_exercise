@@ -3,6 +3,7 @@
 // ======================
 const API_URL_BASE = 'http://localhost:1234/books'
 let books = []
+let editingBookId = null // bandera para saber si estamos editando o creando
 
 // Elementos del DOM
 const booksContainer = document.getElementById('booksContainer')
@@ -56,21 +57,36 @@ function createBookCard (book) {
     `
 
   // Eliminar
-  card.querySelector('.btn-delete').addEventListener('click', () => {
-    // deleteBook(book.id)
+  card.querySelector('.btn-delete').addEventListener('click', async () => {
+    const result = await deleteBook(book.id)
+    console.log(result)
+    books = await fetchBooks()
+    renderBooks(await filterBooks(''))
   })
 
   // Editar libro
   card.querySelector('.btn-edit').addEventListener('click', () => {
-    // console.log('Editar libro:', book.id)
-    // TODO: abrir modal con datos cargados y luego PATCH
+    editingBookId = book.id // guardamos id
+    openModalWindow()
+
+    // rellenar formulario con datos del libro
+    document.getElementById('title').value = book.title
+    document.getElementById('author').value = book.author
+    document.getElementById('year').value = book.year
+    document.getElementById('pages').value = book.pages
+
+    // marcar géneros seleccionados
+    const genreSelect = document.getElementById('genre')
+    Array.from(genreSelect.options).forEach(opt => {
+      opt.selected = book.genre.includes(opt.value)
+    })
   })
 
   booksContainer.appendChild(card)
 }
 
 // ======================
-// CREACION DE LIBRO
+// CREACION / EDICION DE LIBRO
 // ======================
 bookForm.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -81,8 +97,13 @@ bookForm.addEventListener('submit', (e) => {
   const pages = parseInt(document.getElementById('pages').value)
   const genre = Array.from(document.getElementById('genre').selectedOptions).map(opt => opt.value)
 
-  const newBook = { title, author, year, pages, genre }
-  addBook(newBook)
+  const bookData = { title, author, year, pages, genre }
+
+  if (editingBookId) {
+    updateBook(editingBookId, bookData) // EDITAR LIBRO
+  } else {
+    addBook(bookData) // CREAR LIBRO
+  }
 })
 
 // ======================
@@ -161,6 +182,39 @@ async function addBook (newBook) {
   }
 }
 
+async function updateBook (id, updatedBook) {
+  try {
+    const res = await fetch(`${API_URL_BASE}/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedBook)
+    })
+
+    if (!res.ok) {
+      const { error } = await res.json()
+      showErrors(error)
+    } else {
+      closeModalWindow()
+      books = await fetchBooks()
+      renderBooks(await filterBooks(''))
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function deleteBook (id) {
+  try {
+    const res = await fetch(`http://localhost:1234/books/${id}`, {
+      method: 'DELETE'
+    })
+
+    return await res.error
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 // ======================
 // MANEJO DEL MODAL
 // ======================
@@ -184,6 +238,7 @@ function openModalWindow () {
 
 function closeModalWindow () {
   bookModal.style.display = 'none'
+  editingBookId = null // EDITAR LIBRO: al cerrar modal, volvemos a modo "crear"
 }
 
 function showErrors (error) {
