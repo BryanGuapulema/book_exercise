@@ -66,6 +66,8 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
 
 ---
 
-
+## Nota
 Usar el comando **npm run dev** en la carpeta raiz para desplegar el frontend y backend
 al mismo tiempo
+
+---
