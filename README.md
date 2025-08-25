@@ -45,7 +45,7 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
 
 ## 🖥️ Frontend (HTML + JS)
 
-- Página principal que muestre los libros en **tarjetas** con:
+- ✅Página principal que muestre los libros en **tarjetas** con:
   - Título
   - Autor
   - Año
@@ -54,14 +54,14 @@ Construir una pequeña aplicación **fullstack** para gestionar libros, que perm
   - Botón **Eliminar**
   - Botón **Editar**
 
-- Formulario para **agregar un nuevo libro** con validación en el frontend.
+- Formulario para **agregar un nuevo libro** con validación en el frontend. ✅
 
 - Input de búsqueda:
-  - Por **autor** o **género**.
-  - Hace petición `fetch` a la API (`/books?author=X`).
+  - Por **autor** o **género**.✅
+  - Hace petición `fetch` a la API (`/books?author=X`).✅
 
-- Confirmación al eliminar (`confirm("¿Seguro que deseas eliminar este libro?")`).
+- Confirmación al eliminar (`confirm("¿Seguro que deseas eliminar este libro?")`).✅
 
-- Mostrar mensajes de error o éxito.
+- Mostrar mensajes de error o éxito.✅
 
 ---

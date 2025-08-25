@@ -191,3 +191,45 @@ body {
     .modal-content button[type="submit"]:hover {
       background: #303f9f;
     }
+
+    /* Contenedor de todos los toasts */
+#toastContainer {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+}
+
+/* Estilo general del toast */
+.toast {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slideIn 0.4s forwards, fadeOut 0.5s 2.5s forwards;
+}
+
+/* Colores según tipo */
+.toast.success { background-color: #2ecc71; }  /* verde */
+.toast.error { background-color: #e74c3c; }    /* rojo */
+
+/* Animaciones */
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

@@ -3,7 +3,7 @@
 // ======================
 const API_URL_BASE = 'http://localhost:1234/books'
 let books = []
-let editingBookId = null // bandera para saber si estamos editando o creando
+let editingBookId = null // bandera para identificar si estamos editando
 
 // Elementos del DOM
 const booksContainer = document.getElementById('booksContainer')
@@ -13,6 +13,8 @@ const bookModal = document.getElementById('bookModal')
 const closeModal = document.getElementById('closeModal')
 const modalError = document.getElementById('modalError')
 const bookForm = document.getElementById('bookForm')
+const modalTitle = document.getElementById('modalTitle')
+const toastContainer = document.getElementById('toastContainer')
 
 // ======================
 // INIT
@@ -20,7 +22,6 @@ const bookForm = document.getElementById('bookForm')
 
 document.addEventListener('DOMContentLoaded', async () => {
   books = await fetchBooks()
-  // al cargar no hay texto de busqueda
   renderBooks(await filterBooks(''))
 })
 
@@ -32,7 +33,7 @@ function renderBooks (books) {
   booksContainer.innerHTML = ''
 
   if (books.length === 0) {
-    booksContainer.innerHTML = '<p>No se eonctraron libros</p>'
+    booksContainer.innerHTML = '<p>No se encontraron libros</p>'
   }
 
   books.forEach(book => {
@@ -58,26 +59,21 @@ function createBookCard (book) {
 
   // Eliminar
   card.querySelector('.btn-delete').addEventListener('click', async () => {
+    if (!confirm('¿Seguro que deseas eliminar este libro?')) return
+
     const result = await deleteBook(book.id)
-    console.log(result)
-    books = await fetchBooks()
-    renderBooks(await filterBooks(''))
+    if (result.ok) {
+      showGlobalMessage('Libro eliminado con éxito ✅', 'success')
+      books = await fetchBooks()
+      renderBooks(await filterBooks(''))
+    } else {
+      showGlobalMessage('Error al eliminar el libro ❌', 'error')
+    }
   })
 
   // Editar libro
   card.querySelector('.btn-edit').addEventListener('click', () => {
-    editingBookId = book.id
-    openModalWindow()
-
-    // rellenar formulario con datos del libro
-    document.getElementById('title').value = book.title
-    document.getElementById('author').value = book.author
-    document.getElementById('year').value = book.year
-    document.getElementById('pages').value = book.pages
-    const genreSelect = document.getElementById('genre')
-    Array.from(genreSelect.options).forEach(opt => {
-      opt.selected = book.genre.includes(opt.value)
-    })
+    openModalWindow(true, book)
   })
 
   booksContainer.appendChild(card)
@@ -110,7 +106,6 @@ bookForm.addEventListener('submit', (e) => {
 searchInput.addEventListener('input', debounce(
   async () => {
     const searchText = searchInput.value.trim()
-    // despues de filtrar el texto renderiza los resultados
     renderBooks(await filterBooks(searchText))
   }, 500)
 )
@@ -169,47 +164,50 @@ async function addBook (newBook) {
     if (!res.ok) {
       const { error } = await res.json()
       showErrors(error)
+      showGlobalMessage('Error al crear el libro ❌', 'error')
     } else {
-      // const book = await res.json()
       closeModalWindow()
       books = await fetchBooks()
       renderBooks(await filterBooks(''))
+      showGlobalMessage('Libro agregado con éxito ✅', 'success')
     }
   } catch (error) {
-    console.error(error)
+    showGlobalMessage('Error de conexión ❌', 'error')
   }
 }
 
-async function updateBook (id, updatedBook) {
+async function updateBook (id, bookData) {
   try {
     const res = await fetch(`${API_URL_BASE}/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedBook)
+      body: JSON.stringify(bookData)
     })
 
     if (!res.ok) {
       const { error } = await res.json()
       showErrors(error)
+      showGlobalMessage('Error al actualizar el libro ❌', 'error')
     } else {
       closeModalWindow()
       books = await fetchBooks()
       renderBooks(await filterBooks(''))
+      showGlobalMessage('Libro actualizado con éxito ✅', 'success')
     }
   } catch (error) {
-    console.error(error)
+    showGlobalMessage('Error de conexión ❌', 'error')
   }
 }
 
 async function deleteBook (id) {
   try {
-    const res = await fetch(`http://localhost:1234/books/${id}`, {
+    const res = await fetch(`${API_URL_BASE}/${id}`, {
       method: 'DELETE'
     })
 
-    return await res.error
+    return { ok: res.ok }
   } catch (error) {
-    throw new Error(error)
+    return { ok: false }
   }
 }
 
@@ -218,7 +216,7 @@ async function deleteBook (id) {
 // ======================
 
 // Abrir modal
-newBookBtn.addEventListener('click', openModalWindow)
+newBookBtn.addEventListener('click', () => openModalWindow(false))
 
 // Cerrar modal
 closeModal.addEventListener('click', closeModalWindow)
@@ -228,15 +226,31 @@ window.addEventListener('click', (e) => {
   if (e.target === bookModal) closeModalWindow()
 })
 
-function openModalWindow () {
+function openModalWindow (isEditing = false, book = null) {
   modalError.innerHTML = ''
   bookModal.style.display = 'flex'
   bookForm.reset()
+
+  if (isEditing && book) {
+    editingBookId = book.id
+    modalTitle.textContent = 'Editar Libro'
+    document.getElementById('title').value = book.title
+    document.getElementById('author').value = book.author
+    document.getElementById('year').value = book.year
+    document.getElementById('pages').value = book.pages
+    const genreSelect = document.getElementById('genre')
+    Array.from(genreSelect.options).forEach(opt => {
+      opt.selected = book.genre.includes(opt.value)
+    })
+  } else {
+    editingBookId = null
+    modalTitle.textContent = 'Nuevo Libro'
+  }
 }
 
 function closeModalWindow () {
   bookModal.style.display = 'none'
-  editingBookId = null // volver a modo "crear"
+  editingBookId = null
 }
 
 function showErrors (error) {
@@ -249,4 +263,20 @@ function showErrors (error) {
 
   modalError.innerHTML = errorList
   modalError.style.color = 'red'
+}
+
+// ======================
+// TOASTS DE MENSAJES
+// ======================
+function showGlobalMessage (message, type) {
+  const toast = document.createElement('div')
+  toast.className = `toast ${type}`
+  toast.textContent = message
+
+  toastContainer.appendChild(toast)
+
+  // Eliminar automáticamente después de 3s
+  setTimeout(() => {
+    toast.remove()
+  }, 3000)
 }

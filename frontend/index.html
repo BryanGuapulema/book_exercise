@@ -28,14 +28,16 @@
       </div>
     </section>
   </main>
+  
+   <!-- Contenedor para los mensajes flotantes -->
+  <div id="toastContainer"></div>
 
-  <!-- Modal para info -->
   <!-- Modal para formulario -->
   <div class="modal" id="bookModal">
     <div class="modal-content">
       <div id="modalError"></div>
       <button class="close-btn" id="closeModal">X</button>
-      <h2>Añadir nuevo libro</h2>
+      <h2 id="modalTitle">Añadir nuevo libro</h2>
       <form id="bookForm">
         <input type="text" id="title" placeholder="Título" required>
         <input type="text" id="author" placeholder="Autor" required>
